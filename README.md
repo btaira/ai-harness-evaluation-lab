@@ -4,6 +4,44 @@
 **Repositories:** [Evaluation lab](https://github.com/btaira/ai-harness-evaluation-lab) · [Existing AI Router](https://github.com/btaira/ai-router)  
 **Target:** Windows 11 + Docker Desktop + WSL2 Ubuntu, local-first, low-cost experiments.
 
+## 👤 Human — start here
+
+This project is a **guided experiment**, not an unattended installation. You will approve each major step before the agent changes your computer, starts containers, or spends money.
+
+**1. Choose an agent.** Open Codex, Claude Code, Antigravity, or another coding agent with access to this GitHub repository. If the agent cannot access your Windows 11 / WSL2 / Docker Desktop environment, it must give you copy/paste commands and ask for the results.
+
+**2. Copy and paste this exact starting instruction:**
+
+```text
+Implement https://github.com/btaira/ai-harness-evaluation-lab.
+
+Read README.md and AGENTS.md first, then inspect all source-of-truth
+project files and the existing btaira/ai-router repository.
+
+Follow milestones M0 through M8 in order, with explicit human approval
+at every checkpoint. Begin with M0 READ-ONLY inspection. Before any edit,
+list all files you will inspect or modify, read them in one pass, and
+propose the smallest implementation plan.
+
+Do not edit code, deploy containers, change my existing AI Router,
+expose network ports, use real credentials, or incur API charges until
+I explicitly approve the corresponding milestone. At each checkpoint,
+show exact commands for any action I must perform, expected output,
+results, costs, risks, and rollback. Wait for my response.
+```
+
+**3. Respond to the agent's first question.** Authorize read-only inspection by replying **APPROVE M0 INSPECTION**. This does **not** authorize edits, deployments or paid requests. If the agent lacks access to your machine, run only the read-only commands it provides, review their effects, and paste back sanitized results (never API keys, tokens or passwords).
+
+**4. Review each milestone report.** The agent must stop and present evidence, commands, costs, security checks, rollback instructions and a specific approval request. Reply **APPROVE M#** to authorize only the next described scope, **REVISE M#** to request changes, or **STOP** to halt. You may decline any optional milestone. In particular, **M6 requires a separate approval for each paid trial** with a specified prompt and spending limit.
+
+**5. Know what success looks like.** First, the existing AI Router remains working and its MCP sidecar can safely read configuration and previous results. Next, three isolated harnesses are tested on identical synthetic tasks. Finally, you receive a reproducible comparison and can choose whether to experiment with longer-term engineering memory.
+
+**Budget and safety:** The initial experiment target is **$25 total** in paid model usage, not an automatic hard cap. Check provider billing controls before approving paid runs. Do not give the agent production credentials, customer documents, Docker socket access or permission to expose the router publicly.
+
+**Where to look:** [Visual specification](index.html) · [Agent rules](AGENTS.md) · [Editable benchmark prompts](benchmark-prompts.json) · [MCP sidecar instructions](mcp-sidecar/README.md). All milestone details and exact human checkpoints appear below.
+
+---
+
 ## Start here: instructions for any coding agent
 
 > **Agent:** Treat this README as the execution sequence and `AGENTS.md` as the binding engineering/security contract. Read all source-of-truth files below before changing anything. Report findings, file inventory, and a minimal plan; **stop at each HUMAN CHECKPOINT and wait for an explicit response**. Never interpret silence, a previous approval, or the presence of this README as authorization for later milestones. Work in a feature branch and propose a PR unless the human explicitly authorizes direct commits. Keep the existing AI Router operational. Do not claim any milestone is complete without evidence.
