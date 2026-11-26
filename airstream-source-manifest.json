@@ -1,0 +1,91 @@
+{
+  "title": "1978 Airstream Excella 500 Service Manual",
+  "source_directory": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/",
+  "output_file": "1978_Airstream_Excella_500_Service_Manual.pdf",
+  "excluded": [
+    {
+      "filename": "Camping at Orange County Parks 3 13[1].pdf",
+      "reason": "Unrelated to the Airstream service manual"
+    }
+  ],
+  "chapters": [
+    {
+      "chapter": 1,
+      "title": "Chassis",
+      "filename": "Chassis.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/Chassis.pdf"
+    },
+    {
+      "chapter": 2,
+      "title": "Brakes",
+      "filename": "Brakes.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/Brakes.pdf"
+    },
+    {
+      "chapter": 3,
+      "title": "Shell",
+      "filename": "Shell.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/Shell.pdf"
+    },
+    {
+      "chapter": 4,
+      "title": "Interior",
+      "filename": "Interior.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/Interior.pdf"
+    },
+    {
+      "chapter": 5,
+      "title": "Water",
+      "filename": "water.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/water.pdf"
+    },
+    {
+      "chapter": 6,
+      "title": "Drainage",
+      "filename": "Drainange.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/Drainange.pdf"
+    },
+    {
+      "chapter": 7,
+      "title": "L.P.G.",
+      "filename": "LPG.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/LPG.pdf"
+    },
+    {
+      "chapter": 8,
+      "title": "Electrical",
+      "filename": "Electrical.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/Electrical.pdf"
+    },
+    {
+      "chapter": 9,
+      "title": "Furnace",
+      "filename": "Furnace.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/Furnace.pdf"
+    },
+    {
+      "chapter": 10,
+      "title": "Air Conditioner",
+      "filename": "Air Conditioner.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/Air%20Conditioner.pdf"
+    },
+    {
+      "chapter": 11,
+      "title": "Water Heater",
+      "filename": "Water Heater.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/Water%20Heater.pdf"
+    },
+    {
+      "chapter": 12,
+      "title": "Range and Oven",
+      "filename": "Ranger and Oven.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/Ranger%20and%20Oven.pdf"
+    },
+    {
+      "chapter": 13,
+      "title": "Refrigerator",
+      "filename": "Refrigerator.pdf",
+      "url": "https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/Refrigerator.pdf"
+    }
+  ]
+}
