@@ -1,0 +1,245 @@
+from __future__ import annotations
+
+import hashlib
+import json
+import subprocess
+import tempfile
+from pathlib import Path
+
+import requests
+from pypdf import PdfReader
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
+ROOT = Path(__file__).resolve().parents[1]
+MANIFEST_PATH = ROOT / "airstream-source-manifest.json"
+QA_PATH = ROOT / "1978_Airstream_Excella_500_Service_Manual_QA.txt"
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def run(command: list[str]) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        command,
+        check=True,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+
+
+def render_page(pdf: Path, page_number: int, prefix: Path) -> Path:
+    run(
+        [
+            "pdftoppm",
+            "-f",
+            str(page_number),
+            "-l",
+            str(page_number),
+            "-r",
+            "100",
+            "-singlefile",
+            str(pdf),
+            str(prefix),
+        ]
+    )
+    rendered = prefix.with_suffix(".ppm")
+    if not rendered.exists() or rendered.stat().st_size == 0:
+        raise RuntimeError(f"Renderer did not create {rendered}")
+    return rendered
+
+
+def build_session() -> requests.Session:
+    retry = Retry(
+        total=6,
+        connect=6,
+        read=6,
+        backoff_factor=2,
+        status_forcelist=(408, 429, 500, 502, 503, 504),
+        allowed_methods=frozenset({"GET"}),
+    )
+    session = requests.Session()
+    session.mount("https://", HTTPAdapter(max_retries=retry))
+    session.headers.update(
+        {
+            "User-Agent": (
+                "Mozilla/5.0 (X11; Linux x86_64) "
+                "AppleWebKit/537.36 Chrome/131.0 Safari/537.36"
+            ),
+            "Accept": "application/pdf,*/*;q=0.8",
+        }
+    )
+    return session
+
+
+def main() -> None:
+    manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    output_path = ROOT / manifest["output_file"]
+    session = build_session()
+
+    report: list[str] = [
+        manifest["title"],
+        "Combined PDF build and QA report",
+        "=" * 58,
+        f"Source directory: {manifest['source_directory']}",
+        f"Manifest: {MANIFEST_PATH.name}",
+        "",
+        "Included source PDFs (manual chapter order):",
+    ]
+
+    with tempfile.TemporaryDirectory(prefix="airstream-build-") as temp_name:
+        temp = Path(temp_name)
+        source_dir = temp / "sources"
+        render_dir = temp / "renders"
+        source_dir.mkdir()
+        render_dir.mkdir()
+
+        source_records: list[dict[str, object]] = []
+        total_source_pages = 0
+
+        for chapter in manifest["chapters"]:
+            chapter_number = int(chapter["chapter"])
+            filename = str(chapter["filename"])
+            source_path = source_dir / f"{chapter_number:02d}_{filename}"
+
+            with session.get(str(chapter["url"]), stream=True, timeout=(30, 240)) as response:
+                response.raise_for_status()
+                with source_path.open("wb") as handle:
+                    for chunk in response.iter_content(chunk_size=1024 * 1024):
+                        if chunk:
+                            handle.write(chunk)
+
+            if source_path.stat().st_size == 0:
+                raise RuntimeError(f"Downloaded empty file: {filename}")
+            with source_path.open("rb") as handle:
+                header = handle.read(1024)
+            if b"%PDF-" not in header:
+                raise RuntimeError(f"Downloaded content is not a PDF: {filename}")
+
+            reader = PdfReader(str(source_path), strict=False)
+            page_count = len(reader.pages)
+            if page_count < 1:
+                raise RuntimeError(f"PDF has no pages: {filename}")
+
+            start_page = total_source_pages + 1
+            end_page = total_source_pages + page_count
+            record = {
+                "chapter": chapter_number,
+                "title": str(chapter["title"]),
+                "filename": filename,
+                "path": source_path,
+                "pages": page_count,
+                "start": start_page,
+                "end": end_page,
+                "bytes": source_path.stat().st_size,
+                "sha256": sha256(source_path),
+            }
+            source_records.append(record)
+            total_source_pages = end_page
+            report.append(
+                f"  {chapter_number:02d}. {record['title']} - {filename} - "
+                f"{page_count} pages - merged pages {start_page}-{end_page} - "
+                f"{record['bytes']} bytes - SHA-256 {record['sha256']}"
+            )
+
+        merge_command = ["qpdf", "--empty", "--pages"]
+        for record in source_records:
+            merge_command.extend([str(record["path"]), "1-z"])
+        merge_command.extend(["--", str(output_path)])
+        run(merge_command)
+
+        qpdf_result = run(["qpdf", "--check", str(output_path)])
+        merged_reader = PdfReader(str(output_path), strict=False)
+        merged_page_count = len(merged_reader.pages)
+        if merged_page_count != total_source_pages:
+            raise RuntimeError(
+                f"Page-count mismatch: merged={merged_page_count}, sources={total_source_pages}"
+            )
+
+        page_offset = 0
+        for record in source_records:
+            source_reader = PdfReader(str(record["path"]), strict=False)
+            for source_index, source_page in enumerate(source_reader.pages):
+                merged_page = merged_reader.pages[page_offset + source_index]
+                source_box = tuple(round(float(value), 5) for value in source_page.mediabox)
+                merged_box = tuple(round(float(value), 5) for value in merged_page.mediabox)
+                if source_box != merged_box:
+                    raise RuntimeError(
+                        f"Media-box mismatch in {record['filename']} page {source_index + 1}: "
+                        f"source={source_box}, merged={merged_box}"
+                    )
+                source_rotation = int(source_page.get("/Rotate", 0) or 0) % 360
+                merged_rotation = int(merged_page.get("/Rotate", 0) or 0) % 360
+                if source_rotation != merged_rotation:
+                    raise RuntimeError(
+                        f"Rotation mismatch in {record['filename']} page {source_index + 1}: "
+                        f"source={source_rotation}, merged={merged_rotation}"
+                    )
+            page_offset += int(record["pages"])
+
+        render_checks: list[str] = []
+        for record in source_records:
+            for source_page_number in sorted({1, int(record["pages"])}):
+                merged_page_number = int(record["start"]) + source_page_number - 1
+                label = f"chapter-{int(record['chapter']):02d}-page-{source_page_number}"
+                source_ppm = render_page(
+                    Path(record["path"]),
+                    source_page_number,
+                    render_dir / f"{label}-source",
+                )
+                merged_ppm = render_page(
+                    output_path,
+                    merged_page_number,
+                    render_dir / f"{label}-merged",
+                )
+                source_render_hash = sha256(source_ppm)
+                merged_render_hash = sha256(merged_ppm)
+                if source_render_hash != merged_render_hash:
+                    raise RuntimeError(
+                        f"Rendered-page mismatch: {record['filename']} source page "
+                        f"{source_page_number} vs merged page {merged_page_number}"
+                    )
+                render_checks.append(
+                    f"  PASS - {record['filename']} source page {source_page_number} "
+                    f"matches merged page {merged_page_number} - SHA-256 {source_render_hash}"
+                )
+
+        report.extend(
+            [
+                "",
+                "Excluded file:",
+                *[
+                    f"  {item['filename']} - {item['reason']}"
+                    for item in manifest.get("excluded", [])
+                ],
+                "",
+                "Verification results:",
+                f"  PASS - all {len(source_records)} source files downloaded as valid PDFs",
+                f"  PASS - merged page count equals source total: {merged_page_count}",
+                "  PASS - every merged page preserves its source media box and rotation",
+                f"  PASS - qpdf structural check completed ({qpdf_result.stdout.strip() or 'no warnings'})",
+                f"  PASS - {len(render_checks)} source/merged boundary-page render comparisons",
+                *render_checks,
+                "",
+                "Combined file:",
+                f"  Filename: {output_path.name}",
+                f"  Pages: {merged_page_count}",
+                f"  Bytes: {output_path.stat().st_size}",
+                f"  SHA-256: {sha256(output_path)}",
+                "",
+                "Overall result: PASS",
+            ]
+        )
+
+    QA_PATH.write_text("\n".join(report) + "\n", encoding="utf-8")
+    print(QA_PATH.read_text(encoding="utf-8"))
+
+
+if __name__ == "__main__":
+    main()

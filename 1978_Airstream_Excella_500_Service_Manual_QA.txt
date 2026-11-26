@@ -1,0 +1,69 @@
+1978 Airstream Excella 500 Service Manual
+Combined PDF build and QA report
+==========================================================
+Source directory: https://www.motorcycleproducts.org/AS-Temp/Manuals/78%20Airstream%20Shop%20Manual/78%20Excella%20500%20Repair%20Manual/
+Manifest: airstream-source-manifest.json
+
+Included source PDFs (manual chapter order):
+  01. Chassis - Chassis.pdf - 24 pages - merged pages 1-24 - 4127277 bytes - SHA-256 11efec96bdc43a1c0304ce1026d2ab8cf7f5a79eededae3aed03e1cd877ff2b6
+  02. Brakes - Brakes.pdf - 34 pages - merged pages 25-58 - 5544791 bytes - SHA-256 165abaeac256b8a5786283b35fff830f7cfc129d4aee5d248add4261c50ef50c
+  03. Shell - Shell.pdf - 29 pages - merged pages 59-87 - 7383006 bytes - SHA-256 e66ef94f0b32ca1fdfe014bf144ac04112e182f6be4160875c6ef052d234d0eb
+  04. Interior - Interior.pdf - 60 pages - merged pages 88-147 - 9585922 bytes - SHA-256 3395b18f8500caf1ec9c9eddcdf0b4c991468b0567af55c5c29789e1f663f1ae
+  05. Water - water.pdf - 14 pages - merged pages 148-161 - 2857070 bytes - SHA-256 813c2c77c972648b4606ad9e5f12d55f9823a4d5752f32b6a41c68d33dd6ce7a
+  06. Drainage - Drainange.pdf - 12 pages - merged pages 162-173 - 1758932 bytes - SHA-256 c19303ed9db8d46bf49f9babd849bbc30a556adfd312b2b82d420b0ccbd3175e
+  07. L.P.G. - LPG.pdf - 4 pages - merged pages 174-177 - 523484 bytes - SHA-256 8bb88bc227b827a575c45a0015efd9e13ac02169a9f073c6abbaed780d31ce7c
+  08. Electrical - Electrical.pdf - 46 pages - merged pages 178-223 - 7862529 bytes - SHA-256 f6169b4752521ba3f2abde13a5d2e8e02b3af40810160340a054ea0a9f8ac31d
+  09. Furnace - Furnace.pdf - 13 pages - merged pages 224-236 - 2646573 bytes - SHA-256 7507a8ea73bd2cbdf3aa2b49a14ed0fc9560c2f95825fff99930ee7ee8f4e0ee
+  10. Air Conditioner - Air Conditioner.pdf - 11 pages - merged pages 237-247 - 2520778 bytes - SHA-256 8d6d0c006780881e7890ad37f5797c83ef6aac07cbe53136e5c791f443e6187c
+  11. Water Heater - Water Heater.pdf - 7 pages - merged pages 248-254 - 1478128 bytes - SHA-256 69e44532b8108ff55ccd9cb8fb42fbf4a939dbe98fe8e2b9ce15671169735c7c
+  12. Range and Oven - Ranger and Oven.pdf - 6 pages - merged pages 255-260 - 1048216 bytes - SHA-256 66a4932e4a142bf3d2cbb0d96646174a1da2fa5c65df79369d3adbc47f8379a6
+  13. Refrigerator - Refrigerator.pdf - 15 pages - merged pages 261-275 - 2731007 bytes - SHA-256 31c9be161d8c6c136c62afab42c89aad7613c4bbbaeba85b0c8fda1335731a0e
+
+Excluded file:
+  Camping at Orange County Parks 3 13[1].pdf - Unrelated to the Airstream service manual
+
+Verification results:
+  PASS - all 13 source files downloaded as valid PDFs
+  PASS - merged page count equals source total: 275
+  PASS - every merged page preserves its source media box and rotation
+  PASS - qpdf structural check completed (checking /home/runner/work/ai-harness-evaluation-lab/ai-harness-evaluation-lab/1978_Airstream_Excella_500_Service_Manual.pdf
+PDF Version: 1.3
+File is not encrypted
+File is not linearized
+No syntax or stream encoding errors found; the file may still contain
+errors that qpdf cannot detect)
+  PASS - 26 source/merged boundary-page render comparisons
+  PASS - Chassis.pdf source page 1 matches merged page 1 - SHA-256 f9fea1961986ec350409a942d269cbf1ef5d0e6431c63460b2ae4914b16ace37
+  PASS - Chassis.pdf source page 24 matches merged page 24 - SHA-256 44bb92623416381615cba679113e759687d018c0c826b42fe3c4134b376c4e5d
+  PASS - Brakes.pdf source page 1 matches merged page 25 - SHA-256 15c7fb50ec1b450efd51cfa9ef6d0dcbe221567d2b48325e9c27fd553825a4f6
+  PASS - Brakes.pdf source page 34 matches merged page 58 - SHA-256 061fb5df9d3aacc1218be828fc7bd73e527a0d5f2bd069e1a142b0ae7dcbd0c7
+  PASS - Shell.pdf source page 1 matches merged page 59 - SHA-256 589b79f111883ad85464bcaa2ffac7bb264471b8bd370ab0f2529c98abd0010f
+  PASS - Shell.pdf source page 29 matches merged page 87 - SHA-256 1ed05add54178c44fe3064153cabb25e9c00492f4d29918462cf0ba043f1bae9
+  PASS - Interior.pdf source page 1 matches merged page 88 - SHA-256 bdaa29025b5e0cc6b08ca2a9287b38adec2b633484bf519ee7f5bc75d14b51c5
+  PASS - Interior.pdf source page 60 matches merged page 147 - SHA-256 f1d5fad303907dbecf7403e0c0398563d226087072093831d70eeb0f6d4063d2
+  PASS - water.pdf source page 1 matches merged page 148 - SHA-256 c5bb3b1baaa7e3eea52d4c4f798bd82953b6390accc7f77785ad74c0850f0c51
+  PASS - water.pdf source page 14 matches merged page 161 - SHA-256 27a668809045e05bc7ac6179486ee66636fbb13255b8d86f63c9e4aa3c8ce419
+  PASS - Drainange.pdf source page 1 matches merged page 162 - SHA-256 4eb708c29066e9fba78f845b8df969f7a863b1f0e0d35ab951e936d91539826c
+  PASS - Drainange.pdf source page 12 matches merged page 173 - SHA-256 8a932818d10877b25ea32ef74e9a86b6763158f1499b4b4ef774650df5dccca3
+  PASS - LPG.pdf source page 1 matches merged page 174 - SHA-256 e3328f548d58d92bb7e90242e9684635681402ae329e1ed8e754b3afde51bf32
+  PASS - LPG.pdf source page 4 matches merged page 177 - SHA-256 3539443ec521bacef74a78e1ff477a316320c6e56db15038503acf77b4ffc021
+  PASS - Electrical.pdf source page 1 matches merged page 178 - SHA-256 cfaaed5226bef73ec153eb48e61bdbcfcbaeaa0bc97585e66633e2464181aa63
+  PASS - Electrical.pdf source page 46 matches merged page 223 - SHA-256 07eb5c794a5b177509b53c379bae8f74f1b0eec0d68fde7388dbdf8765759cf3
+  PASS - Furnace.pdf source page 1 matches merged page 224 - SHA-256 1715bba6ddf2af3db21b5d60fd2d8a4f1b8afd704504a5885b6db581ab44b373
+  PASS - Furnace.pdf source page 13 matches merged page 236 - SHA-256 9192bd5d17886a643f41168d2965b5e6868600d152df5eae9d81205100e65b92
+  PASS - Air Conditioner.pdf source page 1 matches merged page 237 - SHA-256 041aaa6c3a3074776b7ab8d20dd7e865f2f2765ac0612e82576d68125c450a62
+  PASS - Air Conditioner.pdf source page 11 matches merged page 247 - SHA-256 943b162fc787691b533176b70c53e3f9fe9157de7a92ca9d834b2fbb4205da96
+  PASS - Water Heater.pdf source page 1 matches merged page 248 - SHA-256 4d71bd1f4e385a8ae6bc47cb284ca14417bb6111b4adc75d15690db9c0d04c99
+  PASS - Water Heater.pdf source page 7 matches merged page 254 - SHA-256 07a9efc69ec9dbb3a6e8bcf8e8970138301b7a1c5f0929b5f56beba89873f9b6
+  PASS - Ranger and Oven.pdf source page 1 matches merged page 255 - SHA-256 b858ed303412cb08966bdb1f79201dddaab7e272e1505cf3e8db9192c2b20ba4
+  PASS - Ranger and Oven.pdf source page 6 matches merged page 260 - SHA-256 5ee118529b004e48bb56a7028b03a0aea025a0b729ed01a2fa82c8ed08f157f8
+  PASS - Refrigerator.pdf source page 1 matches merged page 261 - SHA-256 24e7f83847affc9117ee5332ed7c5104cdd30b9a4777c64c65b36d5e66f5b668
+  PASS - Refrigerator.pdf source page 15 matches merged page 275 - SHA-256 10ebee6cac6e18632950f3b32782e7e5db501d58c78e1a5ed5aa5475a12aaad1
+
+Combined file:
+  Filename: 1978_Airstream_Excella_500_Service_Manual.pdf
+  Pages: 275
+  Bytes: 50059286
+  SHA-256: af0c0952752db10bbcee956ad9ebc81ca449c61000d32ec15a93a23d0c33d23a
+
+Overall result: PASS
