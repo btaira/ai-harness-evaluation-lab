@@ -64,6 +64,6 @@ Combined file:
   Filename: 1978_Airstream_Excella_500_Service_Manual.pdf
   Pages: 275
   Bytes: 50059286
-  SHA-256: 16d2682d706f0bf8a7a9bdb933027ac8eaa8938c79c2d818598609fc754ee31a
+  SHA-256: af0c0952752db10bbcee956ad9ebc81ca449c61000d32ec15a93a23d0c33d23a
 
 Overall result: PASS
