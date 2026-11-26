@@ -1,3 +1,0 @@
-To https://github.com/btaira/ai-harness-evaluation-lab
- ! [remote rejected] HEAD -> chatgpt/airstream-repo-staging (refusing to allow a GitHub App to create or update workflow `.github/workflows/verify-manual.yml` without `workflows` permission)
-error: failed to push some refs to 'https://github.com/btaira/ai-harness-evaluation-lab'
